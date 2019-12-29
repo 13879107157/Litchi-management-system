@@ -1,17 +1,20 @@
-import {reqLogin} from '../api/index'
+import {reqLogin,reqUser} from '../api/index'
 import {
     AUTH_SUCCESS,
-    ERROR_MSG
+    ERROR_MSG,
+    RECEIVE_USER,
+    RESET_USER
 } from './actions-type'
-
+//授权成功的同步action
 const anthSucess = (user) => ({type:AUTH_SUCCESS,data:user})
+//错误提示信息的同步action
 const errorMsg = (msg) => ({type:ERROR_MSG,data:msg})
-
-
-
+//获取user信息
+const receiveUser = (user) => ({type:RECEIVE_USER,data:user})
+//重置用户
+const resetUser = (msg) => ({type:RESET_USER,data:msg})
 export const login = (username,password) => {
-    debugger
-    
+    //debugger
     if(!username){
         return errorMsg('必须填写用户名')
     } else if (!password){
@@ -21,13 +24,26 @@ export const login = (username,password) => {
         //debugger
         const response = await reqLogin(username,password)
         //debugger
-        const result = response.data
-        //console.log(result)
+        //const result = response.data
+        //console.log(response)
         if(response.status === 0 ){
             dispatch(anthSucess(response))
             //console.log(result)
         } else {
-            dispatch(errorMsg(response.msg))
+            dispatch(errorMsg(response))
         }
+    }
+}
+
+export const getUserMessage = () => {
+    return async dispatch => {
+        const response = await reqUser()
+        //const result = response.data
+        if(response.status === 0){
+            dispatch(receiveUser(response.data))
+        } else {
+            dispatch(resetUser(response.msg))
+        }
+        
     }
 }

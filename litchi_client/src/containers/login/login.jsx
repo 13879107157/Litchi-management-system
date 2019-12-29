@@ -5,23 +5,29 @@ import {Redirect} from 'react-router-dom'
 
 import {login} from '../../redux/action'
 import './login.less'
+
  class Login extends Component{
+    componentDidMount(){
+        const {user} = this.props
+        //console.log(user)
+        if(user.status === 0){
+            
+            this.props.history.replace('/')
+        }
+    }
     handlSubmit = (event) => {
         event.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const {username,password} = values
                 this.props.login(username,password)
-                message.success('登录成功')
-                
+                //message.success('连接成功')
             } else{
                 console.log('校验失败')
             }
           });
     }
-    componentDidCatch(){
-        
-    }
+
     validatorPwd = (rule, value, callback) => {
         if(!value){
             callback('必须填写密码')
@@ -40,11 +46,12 @@ import './login.less'
         const form = this.props.form
         const {getFieldDecorator} = form
         const {user} = this.props
-        if(user.status === 0){
-            return <Redirect to={this.props.user.path} />
+        if(user){
+            if(user.status === 0){
+                return <Redirect to={this.props.user.path} />
+            }
         }
-        
-        
+       
         return(
             <div className="login">
                 <Row type="flex" align="middle" justify="space-around">
@@ -82,8 +89,9 @@ import './login.less'
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span className="register">注册一个用户</span>
                             </Form.Item>
-                           
+                           { user.status === 1 ? <span className="errorMsg">{user.msg}</span> : null}
                         </Form>
+                        
                     </Col>
                 </Row>
             </div>
