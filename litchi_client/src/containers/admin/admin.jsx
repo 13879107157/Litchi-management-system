@@ -1,26 +1,30 @@
 import React ,{Component} from 'react'
-import { Layout, Menu, Breadcrumb, Icon ,message,Button,Modal} from 'antd'
+import { Layout,Icon ,message,Button,Modal} from 'antd'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import {Redirect,Switch,Route, Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import {getUserMessage} from '../../redux/action'
-//import Login from '../login/login'
+import LeftNav from '../../components/left-nav/left-nav'
 import './index.less'
+import Home from '../home/home'
+import cetegory from '../category/category'
+import Bar from '../chats/bar'
+import Line from '../chats/line'
+import Pie from '../chats/pie'
+import Product from '../product/product'
+import Role from '../role/role'
+import User from '../user/user'
+import Category from '../category/category'
 
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu
+const { Header, Content, Footer } = Layout;
 class Admin extends Component{
     state = {
         collapsed: false,
         visible: false
     };
-    onCollapse = collapsed => {
-    //console.log(collapsed);
-    this.setState({ collapsed });
-    };
-    showModal = () => {
+    showModal = () => {   //退出对话框
       this.setState({
         visible: true,
       });
@@ -38,10 +42,7 @@ class Admin extends Component{
       });
     };
     componentWillMount(){
-      //debugger
       const userid = Cookies.get('userid')
-      //console.log(userid);
-      //const _id = user.data._id
       if(userid){
         this.props.getUserMessage()
       }
@@ -53,9 +54,7 @@ class Admin extends Component{
         message.success('登录成功')
       }
     }
-/*     componentDidMount(){
-      this.props.getUser()
-    } */
+
 
     render(){
         const userid = Cookies.get('userid')
@@ -69,73 +68,42 @@ class Admin extends Component{
         
         return (
             <Layout style={{ minHeight: '100vh' }}>
-              <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                <div className="logo" />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                  <Menu.Item key="1">
-                    <Icon type="pie-chart" />
-                    <span>Option 1</span>
-                  </Menu.Item>
-                  <Menu.Item key="2">
-                    <Icon type="desktop" />
-                    <span>Option 2</span>
-                  </Menu.Item>
-                  <SubMenu
-                    key="sub1"
-                    title={
-                      <span>
-                        <Icon type="user" />
-                        <span>User</span>
-                      </span>
-                    }
-                  >
-                    <Menu.Item key="3">Tom</Menu.Item>
-                    <Menu.Item key="4">Bill</Menu.Item>
-                    <Menu.Item key="5">Alex</Menu.Item>
-                  </SubMenu>
-                  <SubMenu
-                    key="sub2"
-                    title={
-                      <span>
-                        <Icon type="team" />
-                        <span>Team</span>
-                      </span>
-                    }
-                  >
-                    <Menu.Item key="6">Team 1</Menu.Item>
-                    <Menu.Item key="8">Team 2</Menu.Item>
-                  </SubMenu>
-                  <Menu.Item key="9">
-                    <Icon type="file" />
-                    <span>File</span>
-                  </Menu.Item>
-                </Menu>
-              </Sider>
+              <LeftNav />
               <Layout>
-                <Header style={{ background: '#fff', padding: 0 }} >
-                    欢迎{username}
-                    <Button onClick={this.showModal} type="danger">退出</Button>
-                    <Modal
-                    
-                      visible={this.state.visible}
-                      onOk={this.handleOk}
-                      onCancel={this.handleCancel}
-                      centered={true}
-                      mask={true}
-                      
-                  >
-                    <h1>确定要退出登陆吗</h1>
-                  </Modal>
+                <Header style={{ background: '#fff', padding: 0 ,marginBottom:16}} >
+                  欢迎{username}
+                  <Button onClick={this.showModal} type="danger">退出</Button>
                 </Header>
                 <Content style={{ margin: '0 16px' }}>
-                  <Breadcrumb style={{ margin: '16px 0' }}>
+                  {/* <Breadcrumb style={{ margin: '16px 0' }}>
                     <Breadcrumb.Item>User</Breadcrumb.Item>
                     <Breadcrumb.Item>Bill</Breadcrumb.Item>
-                  </Breadcrumb>
-                  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>Bill is a cat.</div>
+                  </Breadcrumb> */}
+                  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                    <Switch>
+                      <Route path='/home' component={Home} />
+                      <Route path='/category' component={Category} />
+                      <Route path='/product' component={Product} />
+                      <Route path='/role' component={Role} />
+                      <Route path='/user' component={User} />
+                      <Route path='/charts/bar' component={Bar} />
+                      <Route path='/charts/line' component={Line} />
+                      <Route path='/charts/pie' component={Pie} />
+                      <Redirect to='home' />
+                    </Switch>
+                  </div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
               </Layout>
+              <Modal
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                centered={true}
+                mask={true}  
+              >
+                <h1>确定要退出登陆吗</h1>
+              </Modal>
             </Layout>
           );
     }
