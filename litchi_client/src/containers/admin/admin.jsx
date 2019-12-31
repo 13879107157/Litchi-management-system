@@ -1,14 +1,14 @@
 import React ,{Component} from 'react'
-import { Layout,Icon ,message,Button,Modal} from 'antd'
+import { Layout,message} from 'antd'
 import {connect} from 'react-redux'
-import {Redirect,Switch,Route, Link} from 'react-router-dom'
-import Cookies from 'js-cookie'
+import {Redirect,Switch,Route} from 'react-router-dom'
+import Cookies from 'js-cookie';
 
-import {getUserMessage} from '../../redux/action'
+import {getUserMessage,getWeather} from '../../redux/action'
 import LeftNav from '../../components/left-nav/left-nav'
+import Heade from '../../components/header/header'
 import './index.less'
 import Home from '../home/home'
-import cetegory from '../category/category'
 import Bar from '../chats/bar'
 import Line from '../chats/line'
 import Pie from '../chats/pie'
@@ -18,35 +18,17 @@ import User from '../user/user'
 import Category from '../category/category'
 
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 class Admin extends Component{
-    state = {
-        collapsed: false,
-        visible: false
-    };
-    showModal = () => {   //退出对话框
-      this.setState({
-        visible: true,
-      });
-    };
-    handleOk = () => {
-      Cookies.remove('userid')
-      this.props.history.replace('/login')
-      this.setState({
-        visible: false,
-      });
-    };
-    handleCancel = () => {
-      this.setState({
-        visible: false,
-      });
-    };
-    componentWillMount(){
+
+
+    
+    UNSAFE_componentWillMount(){
       const userid = Cookies.get('userid')
       if(userid){
         this.props.getUserMessage()
       }
-      
+      this.props.getWeather()
     }
     componentDidMount(){
       const {user} = this.props
@@ -61,19 +43,17 @@ class Admin extends Component{
         if(!userid){
           return <Redirect to='/login' />
         }
-        const {user} = this.props
+        const {user,weather} = this.props
+        //console.log(weather);
        
         const username = user.username
-        console.log(username);
+        //console.log(username);
         
         return (
             <Layout style={{ minHeight: '100vh' }}>
               <LeftNav />
               <Layout>
-                <Header style={{ background: '#fff', padding: 0 ,marginBottom:16}} >
-                  欢迎{username}
-                  <Button onClick={this.showModal} type="danger">退出</Button>
-                </Header>
+                <Heade username={username} weather={weather} />
                 <Content style={{ margin: '0 16px' }}>
                   {/* <Breadcrumb style={{ margin: '16px 0' }}>
                     <Breadcrumb.Item>User</Breadcrumb.Item>
@@ -95,20 +75,12 @@ class Admin extends Component{
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
               </Layout>
-              <Modal
-                visible={this.state.visible}
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
-                centered={true}
-                mask={true}  
-              >
-                <h1>确定要退出登陆吗</h1>
-              </Modal>
+              
             </Layout>
           );
     }
 }
 export default connect(
-    state => ({user:state.user}),
-    {getUserMessage}
+    state => ({user:state.user,weather:state.weather}),
+    {getUserMessage,getWeather}
 )(Admin)

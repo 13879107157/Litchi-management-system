@@ -48,14 +48,14 @@ class LeftNav extends Component{
             }
          })
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         this.menuNodes = this.getMenuNodes(menuList)
     }
 
     render(){
         const path = this.props.location.pathname
         const {openKey} = this
-        console.log(typeof(path));
+        //console.log(typeof(path));
         
         return(
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>

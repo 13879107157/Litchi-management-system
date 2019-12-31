@@ -1,5 +1,5 @@
 import React ,{Component} from 'react'
-import {Input,Row,Col, Button,Icon,Form,message} from 'antd'
+import {Input,Row,Col, Button,Icon,Form} from 'antd'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 

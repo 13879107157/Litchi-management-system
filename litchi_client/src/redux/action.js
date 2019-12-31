@@ -1,9 +1,10 @@
-import {reqLogin,reqUser} from '../api/index'
+import {reqLogin,reqUser,reqWeather} from '../api/index'
 import {
     AUTH_SUCCESS,
     ERROR_MSG,
     RECEIVE_USER,
-    RESET_USER
+    RESET_USER,
+    RECEIVE_WHEATHER
 } from './actions-type'
 //授权成功的同步action
 const anthSucess = (user) => ({type:AUTH_SUCCESS,data:user})
@@ -13,6 +14,7 @@ const errorMsg = (msg) => ({type:ERROR_MSG,data:msg})
 const receiveUser = (user) => ({type:RECEIVE_USER,data:user})
 //重置用户
 const resetUser = (msg) => ({type:RESET_USER,data:msg})
+const receiveWheather = (weather) => ({type:RECEIVE_WHEATHER,data:weather})
 export const login = (username,password) => {
     //debugger
     if(!username){
@@ -45,5 +47,14 @@ export const getUserMessage = () => {
             dispatch(resetUser(response.msg))
         }
         
+    }
+}
+
+export const getWeather = () => {
+    return async dispatch => {
+        const response = await reqWeather()
+        if(response.cityid){
+            dispatch(receiveWheather(response.data[0]))   
+        }
     }
 }

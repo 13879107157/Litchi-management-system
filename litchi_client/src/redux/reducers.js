@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 
-import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER} from './actions-type'
+import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER,RECEIVE_WHEATHER} from './actions-type'
 
 
 
@@ -19,8 +19,17 @@ function user(state = 0,action){
     }
 }
 
+function weather(state =0,action){
+    switch (action.type) {
+        case RECEIVE_WHEATHER:
+            return {...action.data}
+        default:
+            return state
+    }
+}
 export default combineReducers(
     {
-        user
+        user,
+        weather
     }
 )
