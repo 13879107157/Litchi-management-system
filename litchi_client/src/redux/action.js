@@ -1,27 +1,31 @@
-import { reqLogin, reqUser, reqWeather, reqCategories } from "../api/index";
+import { reqLogin, reqUser, reqWeather, reqCategories , reqAddCategory} from "../api/index";
 import {
   AUTH_SUCCESS,
   ERROR_MSG,
   RECEIVE_USER,
   RESET_USER,
   RECEIVE_WHEATHER,
-  RECEIVE_CATEGORYS
+  RECEIVE_CATEGORYS,
+  ADDCATEGORY_SUCCESS
 } from "./actions-type";
 
 //授权成功的同步action
 const anthSucess = user => ({ type: AUTH_SUCCESS, data: user });
 //错误提示信息的同步action
 const errorMsg = msg => ({ type: ERROR_MSG, data: msg });
-//获取user信息
+//获取user信息的同步action
 const receiveUser = user => ({ type: RECEIVE_USER, data: user });
-//重置用户
+//重置用户的同步action
 const resetUser = msg => ({ type: RESET_USER, data: msg });
-//获取天气
+//获取天气的同步action
 const receiveWheather = weather => ({ type: RECEIVE_WHEATHER, data: weather });
-const receiveCategorys = categorys => ({
-  type: RECEIVE_CATEGORYS,
-  data: categorys
-});
+//接收商品分类的同步action
+const receiveCategorys = categorys => ({type: RECEIVE_CATEGORYS,data: categorys});
+//接收
+const addCategorySuccess = category=> ({type:ADDCATEGORY_SUCCESS,data:category})
+/* ---------------------------------------------------------------------------------------------- */
+
+//登录异步action
 export const login = (username, password) => {
   //debugger
   if (!username) {
@@ -66,7 +70,7 @@ export const getWeather = () => {
 };
 
 //获取一级分类异步action
-export const getCategories = parentId => {
+export const getCategories = (parentId) => {
   return async dispatch => {
     //debugger
 
@@ -77,3 +81,12 @@ export const getCategories = parentId => {
     }
   };
 };
+
+export const getaddCategory = ({parentId,categoryName}) => {
+  return async dispatch => {
+    const response = await reqAddCategory({parentId,categoryName});
+    if (response.status === 0) {
+      dispatch(addCategorySuccess(response));
+    }
+  }
+}

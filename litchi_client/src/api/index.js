@@ -15,8 +15,8 @@ export const reqWeather = () =>
 export const reqCategories = parentId =>
   ajax("/manage/category/list", { parentId });
 //添加分类
-export const reqAddCategory = (categoryName, parentId) =>
-  ajax("/manage/category/add", { categoryName, parentId }, "POST");
+export const reqAddCategory = ({categoryName, parentId}) =>
+  ajax("/manage/category/add",{ categoryName, parentId}, "POST");
 //更新分类
 export const reqUpdateCategory = (categoryId, categoryName) =>
   ajax("/manage/category/update", { categoryId, categoryName }, "POST");
