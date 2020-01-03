@@ -1,4 +1,4 @@
-import { reqLogin, reqUser, reqWeather, reqCategories , reqAddCategory} from "../api/index";
+import { reqLogin, reqUser, reqWeather, reqCategories , reqAddCategory,reqUpdateCategory} from "../api/index";
 import {
   AUTH_SUCCESS,
   ERROR_MSG,
@@ -6,7 +6,8 @@ import {
   RESET_USER,
   RECEIVE_WHEATHER,
   RECEIVE_CATEGORYS,
-  ADDCATEGORY_SUCCESS
+  ADDCATEGORY_SUCCESS,
+  UPDATECATEGORY_SUCCESS
 } from "./actions-type";
 
 //授权成功的同步action
@@ -21,8 +22,11 @@ const resetUser = msg => ({ type: RESET_USER, data: msg });
 const receiveWheather = weather => ({ type: RECEIVE_WHEATHER, data: weather });
 //接收商品分类的同步action
 const receiveCategorys = categorys => ({type: RECEIVE_CATEGORYS,data: categorys});
-//接收
+//接收添加成功分类数据
 const addCategorySuccess = category=> ({type:ADDCATEGORY_SUCCESS,data:category})
+//接收更新成功分类数据
+const updateCategorySuccess = category=> ({type:UPDATECATEGORY_SUCCESS,data:category})
+
 /* ---------------------------------------------------------------------------------------------- */
 
 //登录异步action
@@ -81,12 +85,22 @@ export const getCategories = (parentId) => {
     }
   };
 };
-
+//获取添加分类信息
 export const getaddCategory = ({parentId,categoryName}) => {
   return async dispatch => {
     const response = await reqAddCategory({parentId,categoryName});
     if (response.status === 0) {
       dispatch(addCategorySuccess(response));
+    }
+  }
+}
+
+//获取更新分类信息
+export const getUpdateCategory = ({categoryId, categoryName}) => {
+  return async dispatch => {
+    const response = await reqUpdateCategory({categoryId, categoryName})
+    if(response.status === 0){
+      dispatch(updateCategorySuccess(response))
     }
   }
 }

@@ -5,3 +5,4 @@ export const RESET_USER = "reset_user"; //重置用户
 export const RECEIVE_WHEATHER = "receive_wheather"; //获取天气
 export const RECEIVE_CATEGORYS = "receive_categorys";
 export const ADDCATEGORY_SUCCESS = 'addcategory_success'
+export const UPDATECATEGORY_SUCCESS = 'updatecategory_success'

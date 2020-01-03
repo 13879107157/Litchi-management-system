@@ -7,7 +7,8 @@ import {
   RESET_USER,
   RECEIVE_WHEATHER,
   RECEIVE_CATEGORYS,
-  ADDCATEGORY_SUCCESS
+  ADDCATEGORY_SUCCESS,
+  UPDATECATEGORY_SUCCESS
 } from "./actions-type";
 
 function user(state = 0, action) {
@@ -50,9 +51,18 @@ function addsuccessmsg(state = 1, action) {
       return state;
   }
 }
+function updatesuccessmsg(state = 1, action) {
+  switch (action.type) {
+    case UPDATECATEGORY_SUCCESS:
+      return action.data
+    default:
+      return state;
+  }
+}
 export default combineReducers({
   user,
   weather,
   categories,
-  addsuccessmsg
+  addsuccessmsg,
+  updatesuccessmsg
 });
