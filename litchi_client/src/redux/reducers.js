@@ -8,7 +8,8 @@ import {
   RECEIVE_WHEATHER,
   RECEIVE_CATEGORYS,
   ADDCATEGORY_SUCCESS,
-  UPDATECATEGORY_SUCCESS
+  UPDATECATEGORY_SUCCESS,
+  RECEIVE_PRODUCTS
 } from "./actions-type";
 
 function user(state = 0, action) {
@@ -46,7 +47,7 @@ function categories(state = [], action) {
 function addsuccessmsg(state = 1, action) {
   switch (action.type) {
     case ADDCATEGORY_SUCCESS:
-      return action.data
+      return action.data;
     default:
       return state;
   }
@@ -54,7 +55,25 @@ function addsuccessmsg(state = 1, action) {
 function updatesuccessmsg(state = 1, action) {
   switch (action.type) {
     case UPDATECATEGORY_SUCCESS:
-      return action.data
+      return action.data;
+    default:
+      return state;
+  }
+}
+const initproducts = {
+  status:1,
+  data:{
+    pageNum:null,
+    total:null,
+    pages:null,
+    pageSize:null,
+    list:[]
+  }
+}
+function products(state = initproducts, action) {
+  switch (action.type) {
+    case RECEIVE_PRODUCTS:
+      return {...action.data}
     default:
       return state;
   }
@@ -64,5 +83,6 @@ export default combineReducers({
   weather,
   categories,
   addsuccessmsg,
-  updatesuccessmsg
+  updatesuccessmsg,
+  products
 });

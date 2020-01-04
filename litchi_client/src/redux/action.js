@@ -1,4 +1,13 @@
-import { reqLogin, reqUser, reqWeather, reqCategories , reqAddCategory,reqUpdateCategory} from "../api/index";
+import { 
+  reqLogin, 
+  reqUser, 
+  reqWeather, 
+  reqCategories , 
+  reqAddCategory,
+  reqUpdateCategory,
+  reqProducts,
+  reqSearchProducts
+} from "../api/index";
 import {
   AUTH_SUCCESS,
   ERROR_MSG,
@@ -7,7 +16,8 @@ import {
   RECEIVE_WHEATHER,
   RECEIVE_CATEGORYS,
   ADDCATEGORY_SUCCESS,
-  UPDATECATEGORY_SUCCESS
+  UPDATECATEGORY_SUCCESS,
+  RECEIVE_PRODUCTS
 } from "./actions-type";
 
 //授权成功的同步action
@@ -26,7 +36,8 @@ const receiveCategorys = categorys => ({type: RECEIVE_CATEGORYS,data: categorys}
 const addCategorySuccess = category=> ({type:ADDCATEGORY_SUCCESS,data:category})
 //接收更新成功分类数据
 const updateCategorySuccess = category=> ({type:UPDATECATEGORY_SUCCESS,data:category})
-
+//接收分页商品数据
+const receiveProducts = products => ({type:RECEIVE_PRODUCTS,data:products})
 /* ---------------------------------------------------------------------------------------------- */
 
 //登录异步action
@@ -101,6 +112,26 @@ export const getUpdateCategory = ({categoryId, categoryName}) => {
     const response = await reqUpdateCategory({categoryId, categoryName})
     if(response.status === 0){
       dispatch(updateCategorySuccess(response))
+    }
+  }
+}
+
+//获取分页商品列表
+
+export const getProducts = (pageNum, pageSize,searchType,searchName) => {   //getProducts可以获取全部商品也可以按类型获取商品
+  debugger
+  return async dispatch => {
+    let response
+    //如果有搜索的内容，则按名称或描述来搜索获取商品列表，反之显示所有
+    if(searchName){
+      //reqSearchProducts这个接口需要四个值：页码，页数，搜索类型(商品名称/商品描述),搜索内容
+      response = await reqSearchProducts(pageNum, pageSize,searchType,searchName)
+    }else {
+      //reqProducts这个接口则根据页码和页数来显示所有商品内容
+      response = await reqProducts(pageNum, pageSize)
+    }
+    if(response.status === 0){
+      dispatch(receiveProducts(response))
     }
   }
 }

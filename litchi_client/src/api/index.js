@@ -15,8 +15,18 @@ export const reqWeather = () =>
 export const reqCategories = parentId =>
   ajax("/manage/category/list", { parentId });
 //添加分类
-export const reqAddCategory = ({categoryName, parentId}) =>
-  ajax("/manage/category/add",{ categoryName, parentId}, "POST");
+export const reqAddCategory = ({ categoryName, parentId }) =>
+  ajax("/manage/category/add", { categoryName, parentId }, "POST");
 //更新分类
-export const reqUpdateCategory = ({categoryId, categoryName}) =>
+export const reqUpdateCategory = ({ categoryId, categoryName }) =>
   ajax("/manage/category/update", { categoryId, categoryName }, "POST");
+//获取商品分页列表
+export const reqProducts = (pageNum, pageSize) =>
+  ajax("/manage/product/list", { pageNum, pageSize });
+//根据商品描述或商品名称来搜索商品分页列表
+export const reqSearchProducts = (pageNum, pageSize,searchType,searchName ) =>
+  ajax("/manage/product/search", {
+    pageNum,
+    pageSize,
+    [searchType]:searchName
+  });

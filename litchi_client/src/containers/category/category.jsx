@@ -175,7 +175,7 @@ class Category extends Component {
     //console.log(categoryName);
     this.props.getUpdateCategory({categoryId,categoryName})
     this.props.getCategories(this.parentId)
-    console.log(categoryId);
+    //console.log(categoryId);
     this.setState({showModal:0})
   }
 }
