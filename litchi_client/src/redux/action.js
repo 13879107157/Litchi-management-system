@@ -119,7 +119,7 @@ export const getUpdateCategory = ({categoryId, categoryName}) => {
 //获取分页商品列表
 
 export const getProducts = (pageNum, pageSize,searchType,searchName) => {   //getProducts可以获取全部商品也可以按类型获取商品
-  debugger
+  //debugger
   return async dispatch => {
     let response
     //如果有搜索的内容，则按名称或描述来搜索获取商品列表，反之显示所有

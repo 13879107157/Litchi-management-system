@@ -86,7 +86,7 @@ class Home extends Component {
       </span>
     );
     const extra = (
-      <Button type="primary">
+      <Button type="primary" onClick={() => this.props.history.push('/product/addupdateitem')}>
         <Icon type="plus" />
         添加
       </Button>
