@@ -6,7 +6,8 @@ import {
   reqAddCategory,
   reqUpdateCategory,
   reqProducts,
-  reqSearchProducts
+  reqSearchProducts,
+  requpdateStatus
 } from "../api/index";
 import {
   AUTH_SUCCESS,
@@ -20,6 +21,7 @@ import {
   RECEIVE_PRODUCTS
 } from "./actions-type";
 
+import {message} from 'antd'
 //授权成功的同步action
 const anthSucess = user => ({ type: AUTH_SUCCESS, data: user });
 //错误提示信息的同步action
@@ -133,5 +135,20 @@ export const getProducts = (pageNum, pageSize,searchType,searchName) => {   //ge
     if(response.status === 0){
       dispatch(receiveProducts(response))
     }
+  }
+}
+
+export const getUpdateStatus = (productId, status,pageNum, pageSize) => {
+  debugger
+  return async dispatch => {
+    const response =await requpdateStatus(productId, status)
+    if(response.status === 0){
+      const response = await reqProducts(pageNum, pageSize)
+      if(response.status === 0){
+        dispatch(receiveProducts(response))
+        message.success('更改成功')
+      }
+    }
+
   }
 }
