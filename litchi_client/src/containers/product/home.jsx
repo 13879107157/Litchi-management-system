@@ -37,7 +37,7 @@ class Home extends Component {
           const { status, _id } = product;
           //这里存一个新状态是为了发送ajax请求，例：商品为在售时status时等于1,要下架就需要将status改为2，反之改成1
           const newState = status === 1 ? 2 : 1;
-          const {current} = this.state
+          
           return (
             <span>
               {/* 按钮点击后，进心上架或下架*/}
@@ -62,20 +62,25 @@ class Home extends Component {
       {
         title: "操作",
         width: "10%",
-        render: (product) => {
-          
+        render: product => {
           return (
             <span>
               <LinkButton
                 onClick={() =>
-                  this.props.history.push("/product/detail", {product})
+                  this.props.history.push("/product/detail", { product })
                 }
               >
                 详情
               </LinkButton>
               <br />
               {/* 如何向事件回调函数传递参数:先定义一个匿名函数，在函数里面调用处理函数并传入参数 */}
-              <LinkButton>修改</LinkButton>
+              <LinkButton
+                onClick={() =>
+                  this.props.history.push("/product/addupdateitem", product )
+                }
+              >
+                修改
+              </LinkButton>
             </span>
           );
         }
