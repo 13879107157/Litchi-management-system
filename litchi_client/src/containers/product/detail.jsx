@@ -4,6 +4,7 @@ import { Card, List, Icon } from "antd";
 import LinkButton from "../../components/link-button/link-button";
 import "./detail.less";
 import { reqCategory } from "../../api/index";
+import {BASE_IMG_URL} from '../../utils/constants'
 const Item = List.Item;
 class Detail extends Component {
   state = {
@@ -30,7 +31,10 @@ class Detail extends Component {
       const result2 = await reqCategory(categoryId); */
       //debugger
       //一次性发多个请求，只有成功了，才正常处理
-      const results = await Promise.all([reqCategory(pCategoryId),reqCategory(categoryId)])
+      const results = await Promise.all([
+        reqCategory(pCategoryId),
+        reqCategory(categoryId)
+      ]);
       const categoryName1 = results[0].data.name;
       const categoryName2 = results[1].data.name;
       this.setState({ categoryName1, categoryName2 });
@@ -44,11 +48,16 @@ class Detail extends Component {
       </LinkButton>
     );
     //这里的数据是home组件传过来的，通过push方法
-    const { imgs, name, desc, price, detail } = this.props.location.state.product
+    const {
+      imgs,
+      name,
+      desc,
+      price,
+      detail
+    } = this.props.location.state.product;
     //console.log(this.props.location.state);
-    
-    
-    const {categoryName1,categoryName2} = this.state
+
+    const { categoryName1, categoryName2 } = this.state;
     //console.log(this.props.location.state);
     return (
       <Card title={title}>
@@ -67,14 +76,14 @@ class Detail extends Component {
           </Item>
           <Item>
             <span className="title">所属分类：</span>
-            <span>{categoryName1} {categoryName2 ? '-->' + categoryName2 : ''}</span>
+            <span>
+              {categoryName1} {categoryName2 ? "-->" + categoryName2 : ""}
+            </span>
           </Item>
           <Item>
             <span className="title">商品图片：</span>
             <span>
-              {imgs.map(img => (
-                <img key={img} src={img} alt="" />
-              ))}
+              {imgs.length > 0 ? imgs.map(img => (<img key={img} src={BASE_IMG_URL+img} style={{ width: 150, height: "auto" }} alt="图片" /> )) : <span>没有图片</span>}
             </span>
           </Item>
           <Item>

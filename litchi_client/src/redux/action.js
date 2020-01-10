@@ -7,7 +7,9 @@ import {
   reqUpdateCategory,
   reqProducts,
   reqSearchProducts,
-  requpdateStatus
+  requpdateStatus,
+  reqAddProduct,
+  reqUpdateProduct
 } from "../api/index";
 import {
   AUTH_SUCCESS,
@@ -18,7 +20,9 @@ import {
   RECEIVE_CATEGORYS,
   ADDCATEGORY_SUCCESS,
   UPDATECATEGORY_SUCCESS,
-  RECEIVE_PRODUCTS
+  RECEIVE_PRODUCTS,
+  ADDPRODUCT_SUCCESS,
+  UPDATEPRODUCT_SUCCESS
 } from "./actions-type";
 
 import {message} from 'antd'
@@ -40,6 +44,10 @@ const addCategorySuccess = category=> ({type:ADDCATEGORY_SUCCESS,data:category})
 const updateCategorySuccess = category=> ({type:UPDATECATEGORY_SUCCESS,data:category})
 //接收分页商品数据
 const receiveProducts = products => ({type:RECEIVE_PRODUCTS,data:products})
+//添加商品成功status
+const addProductSuccess = status => ({type:ADDPRODUCT_SUCCESS,data:status})
+//更新商品成功status
+const updateProductSuccess = status => ({type:UPDATEPRODUCT_SUCCESS,data:status})
 /* ---------------------------------------------------------------------------------------------- */
 
 //登录异步action
@@ -139,7 +147,7 @@ export const getProducts = (pageNum, pageSize,searchType,searchName) => {   //ge
 }
 
 export const getUpdateStatus = (productId, status,pageNum, pageSize) => {
-  debugger
+  //debugger
   return async dispatch => {
     const response =await requpdateStatus(productId, status)
     if(response.status === 0){
@@ -150,5 +158,27 @@ export const getUpdateStatus = (productId, status,pageNum, pageSize) => {
       }
     }
 
+  }
+}
+
+//获取添加商品成功状态
+export const getAaddProductStatus= (categoryId,pCategoryId,name,desc,price,detail,imgs) => {
+  return async dispatch => {
+    const response = await reqAddProduct(categoryId,pCategoryId,name,desc,price,detail,imgs)
+    if(response.status === 0){
+      dispatch(addProductSuccess(response.status))
+      message.success('添加商品成功')
+    }
+  }
+}
+
+//获取更新商品成功状态
+export const getUpdateProductStatus= (_id,categoryId,pCategoryId,name,desc,price,detail,imgs) => {
+  return async dispatch => {
+    const response = await reqUpdateProduct(_id,categoryId,pCategoryId,name,desc,price,detail,imgs)
+    if(response.status === 0){
+      dispatch(updateProductSuccess(response.status))
+      message.success('修改商品成功')
+    }
   }
 }

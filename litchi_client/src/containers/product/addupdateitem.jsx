@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Card, Form, Icon, Input, Button, Cascader } from "antd";
+import { connect } from "react-redux";
 
 import LinkButton from "../../components/link-button/link-button";
 import { reqCategories } from "../../api/index";
+import {
+  getAaddProductStatus,
+  getUpdateProductStatus
+} from "../../redux/action";
 import "./addupdateitem.less";
 import PicturesWall from "./pictures-wall";
 import RichTextEditor from "./rich-text-editor";
@@ -39,7 +44,7 @@ class AddUpdateItem extends Component {
 
     //如果是一个二级分类商品的更新
     const { isUpdate, product } = this;
-    const {  pCategoryId } = product;
+    const { pCategoryId } = product;
     if (isUpdate && pCategoryId !== "0") {
       //获取对应的二级分类列表
       const subcategories = await this.getCategorys(pCategoryId);
@@ -109,10 +114,25 @@ class AddUpdateItem extends Component {
   submit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        /* const _id = this.props.location.state._id != undefined ? this.props.location.state._id : 0 */
+        const { name, desc, price, categoryIds } = values;
+        const pCategoryId = categoryIds[0];
+        const categoryId = categoryIds[1];
         const imgs = this.pw.current.getImgs();
         const detail = this.editor.current.getDetail();
-        console.log(imgs, detail);
+        //console.log(name, pCategoryId, categoryId, desc, price, imgs, detail);
+        //console.log(this.product);
+        console.log(this.isUpdate);
+        if(this.isUpdate === true){
+          const _id = this.props.location.state._id
+          this.props.getUpdateProductStatus(_id,categoryId,pCategoryId,name,desc,price,detail,imgs)
+          this.props.history.goBack()
+        } else{
+          this.props.getAaddProductStatus(categoryId,pCategoryId,name,desc,price,detail,imgs)
+          this.props.history.goBack()
+        }
+        
+        
       }
     });
   };
@@ -204,4 +224,7 @@ class AddUpdateItem extends Component {
     );
   }
 }
-export default Form.create()(AddUpdateItem);
+export default connect(state => ({ productStatus:state.productStatus }), {
+  getAaddProductStatus,
+  getUpdateProductStatus
+})(Form.create()(AddUpdateItem));

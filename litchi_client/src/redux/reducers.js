@@ -9,7 +9,9 @@ import {
   RECEIVE_CATEGORYS,
   ADDCATEGORY_SUCCESS,
   UPDATECATEGORY_SUCCESS,
-  RECEIVE_PRODUCTS
+  RECEIVE_PRODUCTS,
+  ADDPRODUCT_SUCCESS,
+  UPDATEPRODUCT_SUCCESS
 } from "./actions-type";
 
 function user(state = 0, action) {
@@ -61,19 +63,29 @@ function updatesuccessmsg(state = 1, action) {
   }
 }
 const initproducts = {
-  status:1,
-  data:{
-    pageNum:null,
-    total:null,
-    pages:null,
-    pageSize:null,
-    list:[]
+  status: 1,
+  data: {
+    pageNum: null,
+    total: null,
+    pages: null,
+    pageSize: null,
+    list: []
   }
-}
+};
 function products(state = initproducts, action) {
   switch (action.type) {
     case RECEIVE_PRODUCTS:
-      return {...action.data}
+      return { ...action.data };
+    default:
+      return state;
+  }
+}
+function productStatus(state = 1, action) {
+  switch (action.type) {
+    case ADDPRODUCT_SUCCESS:
+      return action.data;
+    case UPDATEPRODUCT_SUCCESS:
+      return action.data;
     default:
       return state;
   }
@@ -84,5 +96,6 @@ export default combineReducers({
   categories,
   addsuccessmsg,
   updatesuccessmsg,
-  products
+  products,
+  productStatus
 });

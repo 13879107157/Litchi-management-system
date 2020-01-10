@@ -7,3 +7,5 @@ export const RECEIVE_CATEGORYS = "receive_categorys"; //接收分类列表
 export const ADDCATEGORY_SUCCESS = 'addcategory_success'  //添加商品成功
 export const UPDATECATEGORY_SUCCESS = 'updatecategory_success'  //更新商品成功
 export const RECEIVE_PRODUCTS = 'receive_products'  //接收商品列表
+export const ADDPRODUCT_SUCCESS = 'addproduct_success' //添加商品成功
+export const UPDATEPRODUCT_SUCCESS = 'updateproduct_success' //更新商品成功
