@@ -9,3 +9,4 @@ export const UPDATECATEGORY_SUCCESS = 'updatecategory_success'  //更新商品�
 export const RECEIVE_PRODUCTS = 'receive_products'  //接收商品列表
 export const ADDPRODUCT_SUCCESS = 'addproduct_success' //添加商品成功
 export const UPDATEPRODUCT_SUCCESS = 'updateproduct_success' //更新商品成功
+export const RECEIVE_ROLE_LIST = 'receive_role_list'  //接收角色列表

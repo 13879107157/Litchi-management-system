@@ -6,6 +6,7 @@ import LinkButton from "../../components/link-button/link-button";
 import { getProducts, getUpdateStatus } from "../../redux/action";
 import { PAGESIZE } from "../../utils/constants";
 const Option = Select.Option;
+/* 商品管理主页面 */
 class Home extends Component {
   state = {
     current: "1",
@@ -52,9 +53,9 @@ class Home extends Component {
                 }
                 type="default"
               >
-                {status === 1 ? "下架" : "上架"}
+                {status === 1 ? "下　架" : "上　架"}
               </Button>
-              <span>{status === 1 ? "在售" : "已下架"}</span>
+              <Button type="link">{status === 1 ? "在　售" : "已下架"}</Button>
             </span>
           );
         }
@@ -67,6 +68,7 @@ class Home extends Component {
             <span>
               <LinkButton
                 onClick={() =>
+                  //向前跳转到商品“详情”页面，并且发送一个product
                   this.props.history.push("/product/detail", { product })
                 }
               >
@@ -76,6 +78,7 @@ class Home extends Component {
               {/* 如何向事件回调函数传递参数:先定义一个匿名函数，在函数里面调用处理函数并传入参数 */}
               <LinkButton
                 onClick={() =>
+                //向前跳转到商品“修改”页面，并且发送一个product
                   this.props.history.push("/product/addupdateitem", product )
                 }
               >
@@ -90,7 +93,7 @@ class Home extends Component {
   //页面加载完发送获取商品请求
   componentDidMount() {
     const initpageNum = this.pageNum === undefined ? 1 : this.pageNum;
-    console.log(this.pageNum);
+    //console.log(this.pageNum);
     this.props.getProducts(initpageNum, PAGESIZE);
   }
   //Table发生变化触发

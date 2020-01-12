@@ -53,3 +53,9 @@ export const reqDeleteImg = (name) => ajax("/manage/img/delete",{name},'POST')
 export const reqAddProduct = (categoryId,pCategoryId,name,desc,price,detail,imgs) => ajax("/manage/product/add",{categoryId,pCategoryId,name,desc,price,detail,imgs},"POST")
 //更新商品
 export const reqUpdateProduct = (_id,categoryId,pCategoryId,name,desc,price,detail,imgs) => ajax("/manage/product/update",{_id,categoryId,pCategoryId,name,desc,price,detail,imgs,},"POST")
+//添加角色
+export const reqAddRole = (roleName) => ajax("/manage/role/add",{roleName},"POST")
+//获取角色列表
+export const reqRoleList = () => ajax("/manage/role/list")
+//更新角色
+export const reqUpdateRole = (_id,menus,auth_time,auth_name) => ajax("/manage/role/update",{_id,menus,auth_time,auth_name},"POST")

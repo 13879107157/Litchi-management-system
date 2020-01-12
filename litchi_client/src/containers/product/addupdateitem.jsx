@@ -8,11 +8,12 @@ import {
   getAaddProductStatus,
   getUpdateProductStatus
 } from "../../redux/action";
-import "./addupdateitem.less";
 import PicturesWall from "./pictures-wall";
 import RichTextEditor from "./rich-text-editor";
 const { Item } = Form;
 const { TextArea } = Input;
+
+/* 这个组件既是添加还是修改 */
 class AddUpdateItem extends Component {
   state = {
     options: []
@@ -22,7 +23,7 @@ class AddUpdateItem extends Component {
     this.pw = React.createRef();
     this.editor = React.createRef();
   }
-  //组件挂载完就获取商品列表
+  //组件挂载完就获取商品列表 
   componentDidMount() {
     this.getCategorys("0");
   }
@@ -31,7 +32,7 @@ class AddUpdateItem extends Component {
     const product = this.props.location.state;
     //保存是否是更新的标识 true/false
     this.isUpdate = !!product;
-    //保存商品，如果没有保存的是{}
+    //保存商品，如果没有，保存的是{}
     this.product = product || {};
   }
   //初始化options
@@ -122,7 +123,7 @@ class AddUpdateItem extends Component {
         const detail = this.editor.current.getDetail();
         //console.log(name, pCategoryId, categoryId, desc, price, imgs, detail);
         //console.log(this.product);
-        console.log(this.isUpdate);
+        //console.log(this.isUpdate);
         if(this.isUpdate === true){
           const _id = this.props.location.state._id
           this.props.getUpdateProductStatus(_id,categoryId,pCategoryId,name,desc,price,detail,imgs)
@@ -131,8 +132,7 @@ class AddUpdateItem extends Component {
           this.props.getAaddProductStatus(categoryId,pCategoryId,name,desc,price,detail,imgs)
           this.props.history.goBack()
         }
-        
-        
+
       }
     });
   };
