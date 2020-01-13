@@ -30,10 +30,12 @@ import {
   ADDPRODUCT_SUCCESS,
   UPDATEPRODUCT_SUCCESS,
   RECEIVE_ROLE_LIST,
-  RECEIVE_USER_LIST
+  RECEIVE_USER_LIST,
 } from "./actions-type";
 
 import { message } from "antd";
+
+import storage from '../utils/storage'
 //授权成功的同步action
 const anthSucess = user => ({ type: AUTH_SUCCESS, data: user });
 //错误提示信息的同步action
@@ -101,6 +103,7 @@ export const login = (username, password) => {
     //const result = response.data
     //console.log(response)
     if (response.status === 0) {
+      storage.saveUser(response.data)
       dispatch(anthSucess(response));
       //console.log(result)
     } else {
