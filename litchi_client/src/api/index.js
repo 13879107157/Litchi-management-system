@@ -44,18 +44,55 @@ export const reqCategory = categoryId =>
 
 //更新商品状态 上架/下架
 export const requpdateStatus = (productId, status) =>
-  ajax("/manage/product/updateStatus", { productId, status } , 'POST');
+  ajax("/manage/product/updateStatus", { productId, status }, "POST");
 
 //删除图片
-export const reqDeleteImg = (name) => ajax("/manage/img/delete",{name},'POST')
+export const reqDeleteImg = name =>
+  ajax("/manage/img/delete", { name }, "POST");
 
 //添加商品
-export const reqAddProduct = (categoryId,pCategoryId,name,desc,price,detail,imgs) => ajax("/manage/product/add",{categoryId,pCategoryId,name,desc,price,detail,imgs},"POST")
+export const reqAddProduct = (
+  categoryId,
+  pCategoryId,
+  name,
+  desc,
+  price,
+  detail,
+  imgs
+) =>
+  ajax(
+    "/manage/product/add",
+    { categoryId, pCategoryId, name, desc, price, detail, imgs },
+    "POST"
+  );
 //更新商品
-export const reqUpdateProduct = (_id,categoryId,pCategoryId,name,desc,price,detail,imgs) => ajax("/manage/product/update",{_id,categoryId,pCategoryId,name,desc,price,detail,imgs,},"POST")
+export const reqUpdateProduct = (
+  _id,
+  categoryId,
+  pCategoryId,
+  name,
+  desc,
+  price,
+  detail,
+  imgs
+) =>
+  ajax(
+    "/manage/product/update",
+    { _id, categoryId, pCategoryId, name, desc, price, detail, imgs },
+    "POST"
+  );
 //添加角色
-export const reqAddRole = (roleName) => ajax("/manage/role/add",{roleName},"POST")
+export const reqAddRole = roleName =>
+  ajax("/manage/role/add", { roleName }, "POST");
 //获取角色列表
-export const reqRoleList = () => ajax("/manage/role/list")
+export const reqRoleList = () => ajax("/manage/role/list");
 //更新角色
-export const reqUpdateRole = (_id,menus,auth_time,auth_name) => ajax("/manage/role/update",{_id,menus,auth_time,auth_name},"POST")
+export const reqUpdateRole = (_id, menus, auth_time, auth_name) =>
+  ajax("/manage/role/update", { _id, menus, auth_time, auth_name }, "POST");
+//获取用户列表
+export const reqUserList = () => ajax("/manage/user/list");
+//添加或更新用户
+export const reqAddOrUpdateUser = user =>
+  ajax("/manage/user/" + (user.password ? "add" : "update"),user,'POST');
+//删除用户
+export const reqDelUser = (userId) => ajax("/manage/user/delete" , {userId} ,"POST")

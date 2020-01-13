@@ -12,7 +12,10 @@ import {
   reqUpdateProduct,
   reqRoleList,
   reqAddRole,
-  reqUpdateRole
+  reqUpdateRole,
+  reqUserList,
+  reqAddOrUpdateUser,
+  reqDelUser
 } from "../api/index";
 import {
   AUTH_SUCCESS,
@@ -27,7 +30,7 @@ import {
   ADDPRODUCT_SUCCESS,
   UPDATEPRODUCT_SUCCESS,
   RECEIVE_ROLE_LIST,
-  
+  RECEIVE_USER_LIST
 } from "./actions-type";
 
 import { message } from "antd";
@@ -75,6 +78,11 @@ const updateProductSuccess = status => ({
 const receiveRoleList = roleList => ({
   type: RECEIVE_ROLE_LIST,
   data: roleList
+});
+//接收用户列表
+const receiveUserList = userList => ({
+  type: RECEIVE_USER_LIST,
+  data: userList
 });
 /* ---------------------------------------------------------------------------------------------- */
 
@@ -271,7 +279,7 @@ export const getAddRoleStatus = roleName => {
   return async dispatch => {
     const response = await reqAddRole(roleName);
     if (response.status === 0) {
-      message.success('添加角色成功')
+      message.success("添加角色成功");
       const result = await reqRoleList();
       if (result.status === 0) {
         dispatch(receiveRoleList(result.data));
@@ -283,17 +291,56 @@ export const getAddRoleStatus = roleName => {
 };
 
 //更新角色权限
-export const getUpdateRoleAuthStatus = (_id,menus,auth_time,auth_name) => {
+export const getUpdateRoleAuthStatus = (_id, menus, auth_time, auth_name) => {
   return async dispatch => {
-    const response = await reqUpdateRole(_id,menus,auth_time,auth_name)
-    if(response.status === 0){
-      message.success('修改角色权限')
+    const response = await reqUpdateRole(_id, menus, auth_time, auth_name);
+    if (response.status === 0) {
+      message.success("修改角色权限");
       const result = await reqRoleList();
       if (result.status === 0) {
         dispatch(receiveRoleList(result.data));
       } else {
         message.error("获取角色列表失败");
       }
+    }
+  };
+};
+//获取用户列表
+export const getUserList = () => {
+  return async dispatch => {
+    const response = await reqUserList()
+    if(response.status === 0 ){
+      dispatch(receiveUserList(response.data))
+    }
+  }
+}
+
+export const getAddOrUpdateStatus = (user) => {
+  return async dispatch => {
+    const response = await reqAddOrUpdateUser(user)
+    if(response.status === 0 ){
+      message.success("操作成功");
+      const response = await reqUserList()
+      if(response.status === 0 ){
+        dispatch(receiveUserList(response.data))
+      }
+    } else {
+      message.error(response.msg);
+    }
+  }
+}
+
+export const getDelUserStatus = (userId) => {
+  return async dispatch => {
+    const response = await reqDelUser(userId)
+    if(response.status === 0 ){
+      message.success("删除成功");
+      const response = await reqUserList()
+      if(response.status === 0 ){
+        dispatch(receiveUserList(response.data))
+      }
+    } else {
+      message.error(response.msg);
     }
   }
 }

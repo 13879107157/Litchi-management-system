@@ -12,7 +12,8 @@ import {
   RECEIVE_PRODUCTS,
   ADDPRODUCT_SUCCESS,
   UPDATEPRODUCT_SUCCESS,
-  RECEIVE_ROLE_LIST
+  RECEIVE_ROLE_LIST,
+  RECEIVE_USER_LIST
 } from "./actions-type";
 
 function user(state = 0, action) {
@@ -91,12 +92,21 @@ function productStatus(state = 1, action) {
       return state;
   }
 }
+
 function roles(state=[],action){
   switch (action.type) {
     case RECEIVE_ROLE_LIST:
       return action.data
     default:
       return state
+  }
+}
+function users(state = {}, action) {
+  switch (action.type) {
+    case RECEIVE_USER_LIST:
+      return action.data;
+    default:
+      return state;
   }
 }
 export default combineReducers({
@@ -107,5 +117,6 @@ export default combineReducers({
   updatesuccessmsg,    //更新分类成功消息
   products,   //商品列表
   productStatus,    //商品上架/下架状态
-  roles    //角色列表
+  roles,    //角色列表
+  users    //用户列表
 });

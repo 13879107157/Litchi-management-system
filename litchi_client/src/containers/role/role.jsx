@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { Card, Table, Button, Modal, Input, Tree } from "antd";
 import { connect } from "react-redux";
 
-import { getRoleList, getAddRoleStatus, getUpdateRoleAuthStatus } from "../../redux/action";
+import {
+  getRoleList,
+  getAddRoleStatus,
+  getUpdateRoleAuthStatus
+} from "../../redux/action";
 import { PAGESIZE } from "../../utils/constants";
 import { formateDate } from "../../utils/index";
 import menuList from "../../config/menuConfig.js";
@@ -14,9 +18,9 @@ class Role extends Component {
     AddVisible: false,
     AuthVisible: false,
     roleNameValue: "",
-    checkedKeys:[]
-
+    checkedKeys: []
   };
+  //组件挂在前初始化Table和Tree数据
   UNSAFE_componentWillMount() {
     this.columns = [
       {
@@ -38,6 +42,7 @@ class Role extends Component {
         dataIndex: "auth_name"
       }
     ];
+
     this.treeNodes = this.getTreeNode(menuList);
   }
   componentDidMount() {
@@ -47,12 +52,12 @@ class Role extends Component {
   onRow = role => {
     return {
       onClick: value => {
-        console.log(role);
-        this.setState({ role ,checkedKeys:role.menus});
+        //console.log(role);
+        this.setState({ role, checkedKeys: role.menus });
       }
     };
   };
-
+/* --------------------------------------------------------------------------------------------------------------------- */
   //显示添加角色modal
   showAddModal = () => {
     this.setState({
@@ -81,24 +86,25 @@ class Role extends Component {
   roleNameInput = e => {
     this.setState({ roleNameValue: e.target.value });
   };
-
+/* --------------------------------------------------------------------------------------------------------------------- */
   //显示角色权限modal
   showAuthModal = () => {
     this.setState({ AuthVisible: true });
   };
   //修改权限按钮
   handleAuthRole = () => {
-    const now = Date.now()
-    const {role,checkedKeys} = this.state
-    const username = this.props.user.username
-    this.props.getUpdateRoleAuthStatus(role._id,checkedKeys,now,username)
-    this.setState({AuthVisible:false})
-
+    const now = Date.now();
+    const { role, checkedKeys } = this.state;
+    const username = this.props.user.username;
+    this.props.getUpdateRoleAuthStatus(role._id, checkedKeys, now, username);
+    this.setState({ AuthVisible: false });
   };
   //关闭角色权限modal
   handleAuthCancel = () => {
     this.setState({ AuthVisible: false });
   };
+
+  //获取树节点
   getTreeNode = menuList => {
     return menuList.reduce((pre, item) => {
       pre.push(
@@ -110,10 +116,9 @@ class Role extends Component {
     }, []);
   };
 
+  //选择复选框触发
   onCheck = checkedKeys => {
-    
-    this.setState({checkedKeys})
-
+    this.setState({ checkedKeys });
   };
   /* ----------------------------------------------------------------------------------------------------------------- */
 
@@ -121,7 +126,7 @@ class Role extends Component {
     //从redux获取到roles(角色列表)
     const { roles } = this.props;
     //取出单个角色对象
-    const { role,checkedKeys } = this.state;
+    const { role, checkedKeys } = this.state;
     //如果角色列表为空则返回空
     if (roles.length <= 0) {
       return null;
@@ -157,6 +162,8 @@ class Role extends Component {
           visible={this.state.AddVisible}
           onOk={this.handleAddRole}
           onCancel={this.handleCancel}
+          cancelText="关闭"
+          okText="添加"
         >
           <span>角色名：</span>
           <Input
@@ -172,6 +179,8 @@ class Role extends Component {
           visible={this.state.AuthVisible}
           onOk={this.handleAuthRole}
           onCancel={this.handleAuthCancel}
+          cancelText="关闭"
+          okText="修改权限"
         >
           <span>角色名：</span>
           <Input
@@ -179,8 +188,8 @@ class Role extends Component {
             value={this.state.role.name}
             disabled
           />
-          <Tree 
-            checkable 
+          <Tree
+            checkable
             defaultExpandAll
             checkedKeys={checkedKeys}
             onCheck={this.onCheck}
@@ -194,8 +203,8 @@ class Role extends Component {
     );
   }
 }
-export default connect(state => ({ roles: state.roles,user:state.user}), {
-  getRoleList,
-  getAddRoleStatus,
+export default connect(state => ({ roles: state.roles, user: state.user }), {
+  getRoleList,    //获取角色列表
+  getAddRoleStatus,     //获取添加角色
   getUpdateRoleAuthStatus
 })(Role);
