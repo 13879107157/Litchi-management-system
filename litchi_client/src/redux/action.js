@@ -298,7 +298,7 @@ export const getUpdateRoleAuthStatus = (_id, menus, auth_time, auth_name) => {
   return async dispatch => {
     const response = await reqUpdateRole(_id, menus, auth_time, auth_name);
     if (response.status === 0) {
-      message.success("修改角色权限");
+      message.success("修改角色权限成功，请重新登录！");
       const result = await reqRoleList();
       if (result.status === 0) {
         dispatch(receiveRoleList(result.data));

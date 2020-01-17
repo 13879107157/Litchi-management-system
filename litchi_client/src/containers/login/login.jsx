@@ -86,8 +86,6 @@ import './login.less'
                             </Form.Item>
                             <Form.Item>
                                 <Button htmlType="submit" className="Button" type="default" size="large" shape="round"><Icon type="login" />登录</Button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span className="register">注册一个用户</span>
                             </Form.Item>
                            { user.status === 1 ? <span className="errorMsg">{user.msg}</span> : null}
                         </Form>

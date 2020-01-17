@@ -98,6 +98,7 @@ class Role extends Component {
     const username = this.props.user.username;
     this.props.getUpdateRoleAuthStatus(role._id, checkedKeys, now, username);
     this.setState({ AuthVisible: false });
+    this.props.history.replace('/login')
   };
   //关闭角色权限modal
   handleAuthCancel = () => {
