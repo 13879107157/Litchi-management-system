@@ -8,12 +8,12 @@ import './index.less'
 import {getWeather} from '../../redux/action'
 import menuList  from '../../config/menuConfig'
 const { Header } = Layout;
-class Heade extends Component {
+class Head extends Component {
   state = {
       visible: false
   };
   UNSAFE_componentWillMount(){
-    this.props.getWeather()
+   // this.props.getWeather()
   }
   handleOk = () => {
       Cookies.remove('userid')
@@ -48,12 +48,13 @@ class Heade extends Component {
     return title
   }
   render() {
-      const {weather} = this.props
-      if(weather === 0){
-          return null
-      }
+      //天气调试接口出错了暂时用不了，如果解开注释会导致head不显示
+      //const {weather} = this.props
+      // if(weather === 0){
+      //     return null
+      // }
       //console.log(weather);
-      const {wea,wea_img,date} = weather
+      // const {wea,wea_img,date} = weather
       const title = this.getTitle()
       //console.log(title);
       
@@ -69,11 +70,11 @@ class Heade extends Component {
               <hr/>
               <div className="header-bottom">
                   <div className="header-bottom-left">{title}</div>
-                  <div className="header-bottom-right">
+                  {/* <div className="header-bottom-right">
                       <span>{date}</span>
                       <img src={require(`../../assets/imges/weather/${wea_img}.png`)} alt=""/>
                       <span>{wea}</span>
-                  </div>
+                  </div> */}
               </div>
 
               <Modal
@@ -92,6 +93,6 @@ class Heade extends Component {
 }
 
 export default connect(
-    state => ({weather:state.weather}),
-    {getWeather}
-)(withRouter(Heade)) 
+    //state => ({weather:state.weather}),
+    //{getWeather}
+)(withRouter(Head)) 

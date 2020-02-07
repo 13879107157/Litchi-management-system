@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 import { getUserMessage, getWeather } from "../../redux/action";
 import LeftNav from "../../components/left-nav/left-nav";
-import Heade from "../../components/header/header";
+import Head from "../../components/header/header";
 import "./index.less";
 import Home from "../home/home";
 import Bar from "../chats/bar";
@@ -48,7 +48,7 @@ class Admin extends Component {
       <Layout style={{ minHeight: "100vh" }}>
         <LeftNav />
         <Layout>
-          <Heade username={username} weather={weather} />
+          <Head username={username} weather={weather} />
           <Content style={{ margin: "0 16px" }}>
             {/* <Breadcrumb style={{ margin: '16px 0' }}>
                     <Breadcrumb.Item>User</Breadcrumb.Item>
