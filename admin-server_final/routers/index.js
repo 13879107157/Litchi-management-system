@@ -17,7 +17,7 @@ const router = express.Router();
 const filter = { password: 0, __v: 0 };
 
 //获取用户
-/* router.get('/user', function (req, res) {
+router.get('/user', function (req, res) {
 
   // 取出 cookie 中的 userid
   //debugger
@@ -30,7 +30,7 @@ const filter = { password: 0, __v: 0 };
   UserModel.findOne({_id:userid}, filter, function (err, user) {
     res.send({code: 0, data: user})
   })
-}) */
+})
 
 // 登陆
 router.post("/login", (req, res) => {
@@ -82,7 +82,7 @@ router.post("/manage/user/add", (req, res) => {
         // 保存
         return UserModel.create({
           ...req.body,
-          password: md5(password || "atguigu")
+          password: md5(password || "cth")
         });
       }
     })
