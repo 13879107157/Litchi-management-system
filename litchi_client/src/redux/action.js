@@ -116,10 +116,11 @@ export const getUserMessage = () => {
   return async dispatch => {
     const response = await reqUser();
     //const result = response.data
-    if (response.status === 0) {
+    //debugger
+    if (response.code === 0) {
       dispatch(receiveUser(response.data));
     } else {
-      dispatch(resetUser(response.msg));
+      message.error('error')
     }
   };
 };

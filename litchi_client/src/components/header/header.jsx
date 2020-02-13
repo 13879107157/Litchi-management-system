@@ -5,16 +5,12 @@ import {connect} from 'react-redux';
 import {Layout,Modal,Button} from 'antd';
 
 import './index.less'
-import {getWeather} from '../../redux/action'
 import menuList  from '../../config/menuConfig'
 const { Header } = Layout;
 class Head extends Component {
   state = {
       visible: false
   };
-  UNSAFE_componentWillMount(){
-   // this.props.getWeather()
-  }
   handleOk = () => {
       Cookies.remove('userid')
       this.props.history.replace('/login')
@@ -49,8 +45,9 @@ class Head extends Component {
   }
   render() {
       //天气调试接口出错了暂时用不了，如果解开注释会导致head不显示
+      const {user} = this.props
       //const {weather} = this.props
-      // if(weather === 0){
+      // if(user === undefined){
       //     return null
       // }
       //console.log(weather);
@@ -62,7 +59,7 @@ class Head extends Component {
           <Header className="header">
               <div className="header-top">
                   <span>
-                    欢迎{this.props.username}
+                    欢迎{user.username}
                   </span>
                   &nbsp;&nbsp;&nbsp;
                   <Button className="logout"  type="danger" onClick={this.showModal}>退出</Button>
@@ -93,6 +90,5 @@ class Head extends Component {
 }
 
 export default connect(
-    //state => ({weather:state.weather}),
-    //{getWeather}
+    state => ({user:state.user})
 )(withRouter(Head)) 

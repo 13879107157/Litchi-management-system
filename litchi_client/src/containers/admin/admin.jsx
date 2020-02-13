@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Redirect, Switch, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import { getUserMessage, getWeather } from "../../redux/action";
+import { getUserMessage} from "../../redux/action";
 import LeftNav from "../../components/left-nav/left-nav";
 import Head from "../../components/header/header";
 import "./index.less";
@@ -24,7 +24,7 @@ class Admin extends Component {
     if (userid) {
       this.props.getUserMessage();
     }
-    this.props.getWeather();
+    //this.props.getWeather();
   }
   componentDidMount() {
     const { user } = this.props;
@@ -77,6 +77,6 @@ class Admin extends Component {
   }
 }
 export default connect(
-  state => ({ user: state.user, weather: state.weather }),
-  { getUserMessage, getWeather }
+  state => ({ user: state.user}),
+  { getUserMessage}
 )(Admin);
